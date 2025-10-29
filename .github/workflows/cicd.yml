@@ -67,5 +67,5 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            cd /opt/docker
+            cd /srv
             docker compose up -d status-api
