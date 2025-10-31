@@ -18,6 +18,7 @@ type CheckResult struct {
 	ID           string `json:"id"`
 	Status       string `json:"status"`
 	ResponseCode int    `json:"response_code"`
+	ResponseTime int64  `json:"response_time"`
 }
 
 func GetAllServices() []Service {
@@ -27,7 +28,7 @@ func GetAllServices() []Service {
 	services = append(services, Service{"it-tools", "https://it-tools.luny.dev"})
 	services = append(services, Service{"lubook", "https://lubook.luny.dev"})
 	services = append(services, Service{"lubook-api", "https://api.lubook.luny.dev"})
-	services = append(services, Service{"acci-api", "https://api.acci.luny.dev"})
+	services = append(services, Service{"acci-api", "https://api.acci.luny.dev/health"})
 
 	services = append(services, Service{"acci", "https://acci.luny.dev"})
 	services = append(services, Service{"cc-sakura", "https://cc-sakura.luny.dev"})
@@ -48,7 +49,10 @@ func CheckURL(id string, url string, results chan<- CheckResult, wg *sync.WaitGr
 	fmt.Printf("info: service %s: checking %s", id, url)
 
 	client := http.Client{Timeout: 5 * time.Second}
+
+	start := time.Now().UnixMilli()
 	res, err := client.Get(url)
+	responseTimeMs := time.Now().UnixMilli() - start
 
 	var checkResult CheckResult
 	checkResult.ID = id
@@ -56,9 +60,11 @@ func CheckURL(id string, url string, results chan<- CheckResult, wg *sync.WaitGr
 	if err != nil {
 		fmt.Printf("error: can't connect to %s for service %s\n", url, id)
 		checkResult.Status = "down"
+		checkResult.ResponseTime = -1
 	} else {
 		fmt.Printf("success: connected to %s for service %s\n", url, id)
 		checkResult.ResponseCode = res.StatusCode
+		checkResult.ResponseTime = responseTimeMs
 
 		if res.StatusCode >= 500 {
 			checkResult.Status = "down"

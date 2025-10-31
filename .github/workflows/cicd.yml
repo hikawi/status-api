@@ -68,4 +68,5 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd /srv
-            docker compose up -d status-api
+            docker compose up -d --pull always status-api
+            docker system prune -f
