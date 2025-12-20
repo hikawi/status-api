@@ -40,7 +40,7 @@ func GetAllServices() []Service {
 	services = append(services, Service{"status", "https://status.luny.dev/health"})
 	services = append(services, Service{"minio-docs", "https://minio.luny.dev"})
 	services = append(services, Service{"cherry-auctions", "https://cherry-auctions.luny.dev"})
-	services = append(services, Service{"cherry-auctions-api", "https://api.cherry-auctions.luny.dev"})
+	services = append(services, Service{"cherry-auctions-api", "https://api.cherry-auctions.luny.dev/v1/health"})
 
 	services = append(services, Service{"cherry-auctions-docs", "https://docs.cherry-auctions.luny.dev"})
 
