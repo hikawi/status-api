@@ -22,7 +22,7 @@ type CheckResult struct {
 }
 
 func GetAllServices() []Service {
-	services := make([]Service, 0, 13)
+	services := make([]Service, 0, 16)
 
 	services = append(services, Service{"online-news", "https://online-news.luny.dev"})
 	services = append(services, Service{"it-tools", "https://it-tools.luny.dev"})
@@ -38,7 +38,11 @@ func GetAllServices() []Service {
 
 	services = append(services, Service{"tic-tac-toe", "https://tic-tac-toe.luny.dev"})
 	services = append(services, Service{"status", "https://status.luny.dev/health"})
-	services = append(services, Service{"sakila-api", "https://sakila.luny.dev/api/health"})
+	services = append(services, Service{"minio-docs", "https://minio.luny.dev"})
+	services = append(services, Service{"cherry-auctions", "https://cherry-auctions.luny.dev"})
+	services = append(services, Service{"cherry-auctions-api", "https://api.cherry-auctions.luny.dev"})
+
+	services = append(services, Service{"cherry-auctions-docs", "https://docs.cherry-auctions.luny.dev"})
 
 	return services
 }
